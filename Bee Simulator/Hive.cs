@@ -51,20 +51,39 @@ namespace Bee_Simulator
 
         public bool AddHoney(double nectar)
         {
+            double honeyToAdd = nectar * NectarHoneyRatio;
+
+            if (honeyToAdd + Honey > MaxHoney)
+                return false;
+
+            Honey += honeyToAdd;
             return true;
         }
 
         public bool ConsumeHoney(double amount)
         {
+            if (amount > Honey)
+                return false;
+
+            Honey -= amount;
             return true;
         }
 
         private void AddBee(Random random)
         {
+            beeCount++;
+
+            int r1 = random.Next(100) - 50;
+            int r2 = random.Next(100) - 50;
+
+            Point startPoint = new Point(locations["Nursery"].X + r1, locations["Nursery"].Y + r2);
+            Bee newBee = new Bee(beeCount, startPoint);
         }
 
         public void Go(Random random)
         {
+            if (Honey > MinHoneyForCreatingBees && random.Next(10) == 1)
+                AddBee(random);
         }
     }
 }
