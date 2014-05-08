@@ -26,6 +26,7 @@ namespace Bee_Simulator
             Bees = new List<Bee>();
             Flowers = new List<Flower>();
             Random random = new Random();
+            Hive = new Hive(this);
 
             for (int i = 0; i < 10; i++)
                 AddFlower(random);

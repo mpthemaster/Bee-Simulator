@@ -50,14 +50,18 @@ namespace Bee_Simulator
 
         private int ID;
         private Flower destinationFlower;
+        private Hive hive;
+        private World world;
 
         /// <summary>
         /// Creates a bee inside the hive.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="location"></param>
-        public Bee(int id, Point location)
+        public Bee(int id, Point location, Hive hive, World world)
         {
+            this.hive = hive;
+            this.world = world;
             ID = id;
             Age = 0;
             this.location = location;
