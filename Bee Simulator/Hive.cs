@@ -34,10 +34,8 @@ namespace Bee_Simulator
 
         public Point GetLocation(string location)
         {
-            Point locationP = locations[location];
-
-            if (locationP != null)
-                return locationP;
+            if (locations.Keys.Contains(location))
+                return locations[location];
             else
                 throw new ArgumentException("Unknown location: " + location);
         }
@@ -84,7 +82,7 @@ namespace Bee_Simulator
 
         public void Go(Random random)
         {
-            if (Honey > MinHoneyForCreatingBees && beeCount < MaxBees && random.Next(10) == 1)
+            if (Honey > MinHoneyForCreatingBees && world.Bees.Count < MaxBees && random.Next(10) == 1)
                 AddBee(random);
         }
     }

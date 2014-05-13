@@ -124,7 +124,10 @@ namespace Bee_Simulator
                     if (!InsideHive)
                     {
                         if (MoveTowardsLocation(hive.GetLocation("Entrance")))
+                        {
+                            InsideHive = true;
                             location = hive.GetLocation("Exit");
+                        }
                     }
                     else
                         if (MoveTowardsLocation(hive.GetLocation("HoneyFactory")))

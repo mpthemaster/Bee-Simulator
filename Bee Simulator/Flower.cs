@@ -14,7 +14,7 @@ namespace Bee_Simulator
         private const double InitialNectar = 1.5;
         private const double MaxNectar = 5;
         private const double NectarAddedPerTurn = .01;
-        private const double NectarGatheredPerTurn = .03;
+        private const double NectarGatheredPerTurn = .3;
 
         private int lifespan;
 
