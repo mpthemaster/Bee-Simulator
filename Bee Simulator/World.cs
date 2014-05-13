@@ -32,7 +32,7 @@ namespace Bee_Simulator
                 AddFlower(random);
         }
 
-        private void Go(Random random)
+        public void Go(Random random)
         {
             Hive.Go(random);
 
@@ -46,7 +46,7 @@ namespace Bee_Simulator
 
             double totalNectarHarvested = 0;
 
-            for (int i = Flowers.Count - 1; i >= 0; i++)
+            for (int i = Flowers.Count - 1; i >= 0; i--)
             {
                 Flower flower = Flowers[i];
                 flower.Go();
