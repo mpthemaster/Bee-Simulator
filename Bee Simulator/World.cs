@@ -21,12 +21,12 @@ namespace Bee_Simulator
         public List<Bee> Bees;
         public List<Flower> Flowers;
 
-        public World()
+        public World(BeeMessage messageSender)
         {
             Bees = new List<Bee>();
             Flowers = new List<Flower>();
             Random random = new Random();
-            Hive = new Hive(this);
+            Hive = new Hive(this, messageSender);
 
             for (int i = 0; i < 10; i++)
                 AddFlower(random);

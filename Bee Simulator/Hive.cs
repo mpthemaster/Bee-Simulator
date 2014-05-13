@@ -11,6 +11,8 @@ namespace Bee_Simulator
     {
         public double Honey { get; private set; }
 
+        public BeeMessage MessageSender;
+
         private Dictionary<string, Point> locations;
         private int beeCount = 0;
         private World world;
@@ -22,8 +24,9 @@ namespace Bee_Simulator
         private const int MaxBees = 8;
         private const double MinHoneyForCreatingBees = 4;
 
-        public Hive(World world)
+        public Hive(World world, BeeMessage messageSender)
         {
+            MessageSender = messageSender;
             this.world = world;
             Honey = InitialHoney;
             InitializeLocations();
@@ -77,7 +80,9 @@ namespace Bee_Simulator
             int r2 = random.Next(100) - 50;
 
             Point startPoint = new Point(locations["Nursery"].X + r1, locations["Nursery"].Y + r2);
-            world.Bees.Add(new Bee(beeCount, startPoint, this, world));
+            Bee newBee = new Bee(beeCount, startPoint, this, world);
+            newBee.MessageSender += this.MessageSender;
+            world.Bees.Add(newBee);
         }
 
         public void Go(Random random)

@@ -23,6 +23,7 @@ namespace Bee_Simulator
         private const int MoveRate = 3;
         private const double MinimumFlowerNectar = 1.5;
         private const int CareerSpan = 1000;
+        public BeeMessage MessageSender;
 
         /// <summary>
         /// The age of the bee.
@@ -78,6 +79,7 @@ namespace Bee_Simulator
         public void Go(Random random)
         {
             Age++;
+            BeeState oldState = CurrentState;
 
             switch (CurrentState)
             {
@@ -150,6 +152,9 @@ namespace Bee_Simulator
                 case BeeState.Retired: //Do nothing.
                     break;
             }
+
+            if (oldState != CurrentState && MessageSender != null)
+                MessageSender(ID, CurrentState.ToString());
         }
 
         /// <summary>

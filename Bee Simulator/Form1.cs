@@ -21,12 +21,17 @@ namespace Bee_Simulator
         public Form1()
         {
             InitializeComponent();
-            world = new World();
+            world = new World(new BeeMessage(SendMessage));
 
             timer1.Interval = 50;
             timer1.Tick += RunFrame;
             timer1.Enabled = false;
             UpdateStats(new TimeSpan());
+        }
+
+        private void SendMessage(int ID, string message)
+        {
+            toolStripStatus.Text = "Bee #" + ID + ": " + message;
         }
 
         private void UpdateStats(TimeSpan frameDuration)
@@ -65,20 +70,20 @@ namespace Bee_Simulator
             {
                 toolStripBtnStartSimulation.Text = "Resume Simulation";
                 timer1.Stop();
-                toolStripStatus.Text = "Simulation Paused";
+                //toolStripStatus.Text = "Simulation Paused";
             }
             else
             {
                 toolStripBtnStartSimulation.Text = "Pause Simulation";
                 timer1.Start();
-                toolStripStatus.Text = "Simulation Running";
+                //toolStripStatus.Text = "Simulation Running";
             }
         }
 
         private void toolStripBtnReset_Click(object sender, EventArgs e)
         {
             framesRun = 0;
-            world = new World();
+            world = new World(new BeeMessage(SendMessage));
 
             if (!timer1.Enabled)
                 toolStripBtnStartSimulation.Text = "Start Simulation";
