@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Bee_Simulator
 {
+    [Serializable]
     internal class Hive
     {
         public double Honey { get; private set; }
 
+        [NonSerialized]
         public BeeMessage MessageSender;
 
         private Dictionary<string, Point> locations;

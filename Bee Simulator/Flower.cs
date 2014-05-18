@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bee_Simulator
 {
+    [Serializable]
     internal class Flower
     {
         private const int LifeSpanMin = 15000;

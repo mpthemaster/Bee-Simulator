@@ -17,12 +17,15 @@ namespace Bee_Simulator
         Retired
     }
 
+    [Serializable]
     internal class Bee
     {
         private const double HoneyConsumed = .5;
         private const int MoveRate = 3;
         private const double MinimumFlowerNectar = 1.5;
         private const int CareerSpan = 1000;
+
+        [NonSerialized]
         public BeeMessage MessageSender;
 
         /// <summary>

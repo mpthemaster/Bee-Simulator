@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Bee_Simulator
 {
+    [Serializable]
     internal class World
     {
         private const double NectarHarvestedPerNewFlower = 50;
 
         //The bounds of the field that flowers can exist.
         private const int FieldMinX = 15;
+
         private const int FieldMinY = 177;
         private const int FieldMaxX = 690;
         private const int FieldMaxY = 290;

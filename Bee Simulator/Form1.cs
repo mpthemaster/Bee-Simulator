@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -117,10 +119,66 @@ namespace Bee_Simulator
 
         private void openToolStripButton_Click(object sender, EventArgs e)
         {
+            World currentWorld = world;
+            int currentFramesRun = framesRun;
+            bool simRunning = timer1.Enabled;
+
+            if (simRunning)
+                timer1.Stop();
+
+            openFileDialog1.InitialDirectory = saveFileDialog1.InitialDirectory;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                try
+                {
+                    using (Stream input = File.OpenRead(openFileDialog1.FileName))
+                    {
+                        BinaryFormatter bf = new BinaryFormatter();
+                        world = (World)bf.Deserialize(input);
+                        framesRun = (int)bf.Deserialize(input);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to read the simulator file.\r\n" + ex.Message, "Bee Simulator Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    world = currentWorld;
+                    framesRun = currentFramesRun;
+                }
+
+            world.Hive.MessageSender = new BeeMessage(SendMessage);
+            foreach (Bee bee in world.Bees)
+                bee.MessageSender = new BeeMessage(SendMessage);
+
+            if (simRunning)
+                timer1.Start();
         }
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
+            bool simRunning = timer1.Enabled;
+
+            if (simRunning)
+                timer1.Stop();
+
+            saveFileDialog1.InitialDirectory = openFileDialog1.InitialDirectory;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                try
+                {
+                    using (Stream output = File.Create(saveFileDialog1.FileName))
+                    {
+                        BinaryFormatter bf = new BinaryFormatter();
+                        bf.Serialize(output, world);
+                        bf.Serialize(output, framesRun);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to save the simulator file.\r\n" + ex.Message, "Bee Simulator Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            if (simRunning)
+                timer1.Start();
         }
     }
 }
