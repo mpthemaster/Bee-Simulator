@@ -39,7 +39,6 @@ namespace Bee_Simulator
         /// The amount of nectar the bee has collected from flowers.
         /// </summary>
         public double NectorCollected { get; private set; }
-
         private Point location;
 
         /// <summary>

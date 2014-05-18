@@ -32,6 +32,32 @@ namespace Bee_Simulator
         private void SendMessage(int ID, string message)
         {
             toolStripStatus.Text = "Bee #" + ID + ": " + message;
+
+            var beeGroups = from bee in world.Bees
+                            group bee by bee.CurrentState into beeGroup
+                            orderby beeGroup.Key
+                            select beeGroup;
+
+            listBox1.Items.Clear();
+            foreach (var group in beeGroups)
+            {
+                string s;
+
+                if (group.Count() == 1)
+                    s = "";
+                else
+                    s = "s";
+
+                listBox1.Items.Add(group.Key.ToString() + ": " + group.Count() + " bee" + s);
+
+                if (group.Key == BeeState.Idle && group.Count() == world.Bees.Count && framesRun > 0)
+                {
+                    listBox1.Items.Add("Simulation Ended: All bees are idle.");
+                    toolStripBtnStartSimulation.Text = "Simulation Ended";
+                    toolStripStatus.Text = "Simulation Ended";
+                    timer1.Stop();
+                }
+            }
         }
 
         private void UpdateStats(TimeSpan frameDuration)
