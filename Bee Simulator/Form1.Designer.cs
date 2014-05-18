@@ -50,6 +50,10 @@
             this.lblBees = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -57,9 +61,15 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.CanOverflow = false;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripBtnStartSimulation,
-            this.toolStripBtnReset});
+            this.toolStripBtnReset,
+            this.toolStripSeparator,
+            this.openToolStripButton,
+            this.saveToolStripButton,
+            this.printToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(293, 25);
@@ -247,6 +257,40 @@
             this.listBox1.Size = new System.Drawing.Size(269, 108);
             this.listBox1.TabIndex = 3;
             // 
+            // openToolStripButton
+            // 
+            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
+            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripButton.Name = "openToolStripButton";
+            this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.openToolStripButton.Text = "&Open";
+            this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click);
+            // 
+            // saveToolStripButton
+            // 
+            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.saveToolStripButton.Text = "&Save";
+            this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+            // 
+            // printToolStripButton
+            // 
+            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
+            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printToolStripButton.Name = "printToolStripButton";
+            this.printToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.printToolStripButton.Text = "&Print";
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +336,10 @@
         private System.Windows.Forms.ToolStripButton toolStripBtnStartSimulation;
         private System.Windows.Forms.ToolStripButton toolStripBtnReset;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripButton openToolStripButton;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripButton printToolStripButton;
     }
 }
 

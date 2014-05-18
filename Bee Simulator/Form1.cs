@@ -114,5 +114,13 @@ namespace Bee_Simulator
             if (!timer1.Enabled)
                 toolStripBtnStartSimulation.Text = "Start Simulation";
         }
+
+        private void openToolStripButton_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e)
+        {
+        }
     }
 }
