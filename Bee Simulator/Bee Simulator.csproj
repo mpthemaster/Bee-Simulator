@@ -49,11 +49,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="BeeControl.Designer.cs" />
-    <Compile Include="BeeControl1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BeeControl.resx</DependentUpon>
-    </Compile>
     <Compile Include="BeeMessage.cs" />
     <Compile Include="FieldForm.cs">
       <SubType>Form</SubType>
