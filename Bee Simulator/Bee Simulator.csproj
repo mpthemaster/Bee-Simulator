@@ -75,8 +75,7 @@
     <Compile Include="Renderer.cs" />
     <Compile Include="World.cs" />
     <EmbeddedResource Include="BeeControl.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>BeeControl1.Designer.cs</LastGenOutput>
+      <DependentUpon>BeeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FieldForm.resx">
       <DependentUpon>FieldForm.cs</DependentUpon>

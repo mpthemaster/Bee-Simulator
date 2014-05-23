@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Bee_Simulator
@@ -9,7 +15,7 @@ namespace Bee_Simulator
         public BeeControl()
         {
             InitializeComponent();
-            BackColor = Color.Transparent;
+            BackColor = System.Drawing.Color.Transparent;
             BackgroundImageLayout = ImageLayout.Stretch;
             ResizeCells();
         }
@@ -18,14 +24,17 @@ namespace Bee_Simulator
 
         private void animationTimer_Tick(object sender, EventArgs e)
         {
-            switch (++cell)
+            cell++;
+            switch (cell)
             {
                 case 1: BackgroundImage = cells[0]; break;
                 case 2: BackgroundImage = cells[1]; break;
                 case 3: BackgroundImage = cells[2]; break;
                 case 4: BackgroundImage = cells[3]; break;
                 case 5: BackgroundImage = cells[2]; break;
-                default: BackgroundImage = cells[1]; cell = 0; break;
+                default:
+                    BackgroundImage = cells[1];
+                    cell = 0; break;
             }
         }
 
