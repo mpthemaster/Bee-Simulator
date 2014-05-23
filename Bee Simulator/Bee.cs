@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Bee_Simulator
 {
-    internal enum BeeState
+    public enum BeeState
     {
         Idle,
         FlyingToFlower,
@@ -14,7 +14,7 @@ namespace Bee_Simulator
     }
 
     [Serializable]
-    internal class Bee
+    public class Bee
     {
         private const double HoneyConsumed = .5;
         private const int MoveRate = 3;

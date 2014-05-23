@@ -101,11 +101,12 @@ namespace Bee_Simulator
         {
             framesRun++;
             world.Go(random);
-            renderer.Render();
             end = DateTime.Now;
             TimeSpan frameDuration = end - start;
             start = end;
             UpdateStats(frameDuration);
+            hiveForm.Invalidate();
+            fieldForm.Invalidate();
         }
 
         private void toolStripBtnStartSimulation_Click(object sender, EventArgs e)
@@ -126,7 +127,6 @@ namespace Bee_Simulator
 
         private void toolStripBtnReset_Click(object sender, EventArgs e)
         {
-            renderer.Reset();
             ResetSimulater();
 
             if (!timer1.Enabled)
@@ -168,7 +168,6 @@ namespace Bee_Simulator
             if (simRunning)
                 timer1.Start();
 
-            renderer.Reset();
             renderer = new Renderer(world, hiveForm, fieldForm);
         }
 
@@ -203,6 +202,11 @@ namespace Bee_Simulator
         private void Form1_Move(object sender, EventArgs e)
         {
             MoveChildForms();
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            renderer.AnimateBees();
         }
     }
 }

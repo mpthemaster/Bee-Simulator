@@ -6,7 +6,7 @@ using System.Linq;
 namespace Bee_Simulator
 {
     [Serializable]
-    internal class Hive
+    public class Hive
     {
         public double Honey { get; private set; }
 
@@ -46,7 +46,7 @@ namespace Bee_Simulator
         private void InitializeLocations()
         {
             locations = new Dictionary<string, Point>();
-            locations.Add("Entrance", new Point(743, 80));
+            locations.Add("Entrance", new Point(690, 80));
             locations.Add("Nursery", new Point(86, 146));
             locations.Add("HoneyFactory", new Point(160, 58));
             locations.Add("Exit", new Point(190, 170));

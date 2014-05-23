@@ -5,7 +5,7 @@ using System.Drawing;
 namespace Bee_Simulator
 {
     [Serializable]
-    internal class World
+    public class World
     {
         private const double NectarHarvestedPerNewFlower = 50;
 

@@ -12,9 +12,16 @@ namespace Bee_Simulator
 {
     public partial class FieldForm : Form
     {
+        public Renderer Renderer { get; set; }
+
         public FieldForm()
         {
             InitializeComponent();
+        }
+
+        private void FieldForm_Paint(object sender, PaintEventArgs e)
+        {
+            Renderer.PaintField(e.Graphics);
         }
     }
 }

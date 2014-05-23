@@ -8,167 +8,97 @@ using System.Windows.Forms;
 
 namespace Bee_Simulator
 {
-    internal class Renderer
+    public class Renderer
     {
         private World world;
         private HiveForm hiveForm;
         private FieldForm fieldForm;
 
-        private Dictionary<Flower, PictureBox> flowersLookup = new Dictionary<Flower, PictureBox>();
-        private List<Flower> deadFlowers = new List<Flower>();
-        private Dictionary<Bee, BeeControl> beesLookup = new Dictionary<Bee, BeeControl>();
-        private List<Bee> retiredBees = new List<Bee>();
+        private Bitmap hiveInside, hiveOutside, flower;
+        private Bitmap[] beeAnimationLarge = new Bitmap[4], beeAnimationSmall = new Bitmap[4];
 
         public Renderer(World world, HiveForm hiveForm, FieldForm fieldForm)
         {
             this.world = world;
             this.hiveForm = hiveForm;
             this.fieldForm = fieldForm;
+            hiveForm.Renderer = this;
+            fieldForm.Renderer = this;
+            InitializeImages();
         }
 
-        public static Bitmap ResizeImage(Bitmap picture, int width, int height)
+        public static Bitmap ResizeImage(Image imageToResize, int width, int height)
         {
-            Bitmap resizedPicture = new Bitmap(width, height);
-            using (Graphics graphics = Graphics.FromImage(resizedPicture))
-                graphics.DrawImage(picture, 0, 0, width, height);
-            return resizedPicture;
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(resizedImage))
+                g.DrawImage(imageToResize, 0, 0, width, height);
+            return resizedImage;
         }
 
-        public void Render()
+        private void InitializeImages()
         {
-            DrawBees();
-            DrawFlowers();
-            RemoveRetiredBeesAndDeadFlowers();
+            hiveInside = ResizeImage(Properties.Resources.Hive__inside_, hiveForm.ClientSize.Width, hiveForm.ClientSize.Height);
+            hiveOutside = ResizeImage(Properties.Resources.Hive__outside_, 50, 50);
+            flower = ResizeImage(Properties.Resources.Flower, 40, 40);
+
+            beeAnimationSmall[0] = ResizeImage(Properties.Resources.Bee_animation_1, 20, 20);
+            beeAnimationSmall[1] = ResizeImage(Properties.Resources.Bee_animation_2, 20, 20);
+            beeAnimationSmall[2] = ResizeImage(Properties.Resources.Bee_animation_3, 20, 20);
+            beeAnimationSmall[3] = ResizeImage(Properties.Resources.Bee_animation_4, 20, 20);
+
+            beeAnimationLarge[0] = ResizeImage(Properties.Resources.Bee_animation_1, 40, 40);
+            beeAnimationLarge[1] = ResizeImage(Properties.Resources.Bee_animation_2, 40, 40);
+            beeAnimationLarge[2] = ResizeImage(Properties.Resources.Bee_animation_3, 40, 40);
+            beeAnimationLarge[3] = ResizeImage(Properties.Resources.Bee_animation_4, 40, 40);
         }
 
-        public void Reset()
+        private int cell = 0, frame = 0;
+
+        public void AnimateBees()
         {
-            foreach (PictureBox flower in flowersLookup.Values)
+            frame++;
+            if (frame >= 6)
+                frame = 0;
+            switch (frame)
             {
-                fieldForm.Controls.Remove(flower);
-                flower.Dispose();
+                case 0: cell = 0; break;
+                case 1: cell = 1; break;
+                case 2: cell = 2; break;
+                case 3: cell = 3; break;
+                case 4: cell = 2; break;
+                case 5: cell = 1; break;
+                default: cell = 0; break;
             }
-
-            foreach (BeeControl bee in beesLookup.Values)
-            {
-                hiveForm.Controls.Remove(bee);
-                fieldForm.Controls.Remove(bee);
-                bee.Dispose();
-            }
-
-            flowersLookup.Clear();
-            beesLookup.Clear();
+            hiveForm.Invalidate();
+            fieldForm.Invalidate();
         }
 
-        private void RemoveRetiredBeesAndDeadFlowers()
+        public void PaintHive(Graphics graphics)
         {
-            foreach (Bee bee in retiredBees)
-                beesLookup.Remove(bee);
-            retiredBees.Clear();
+            graphics.FillRectangle(Brushes.SkyBlue, 0, 0, hiveForm.Width, hiveForm.Height);
+            graphics.DrawImageUnscaled(hiveInside, 0, 0);
 
-            foreach (Flower flower in deadFlowers)
-                flowersLookup.Remove(flower);
-            deadFlowers.Clear();
-        }
-
-        private void DrawFlowers()
-        {
-            //Add new flowers' pictureboxes.
-            foreach (Flower flower in world.Flowers)
-            {
-                if (!flowersLookup.ContainsKey(flower))
-                {
-                    PictureBox flowerControl = new PictureBox()
-                    {
-                        Width = 45,
-                        Height = 55,
-                        Image = Properties.Resources.Flower,
-                        SizeMode = PictureBoxSizeMode.StretchImage,
-                        Location = flower.Location
-                    };
-                    flowersLookup.Add(flower, flowerControl);
-                    fieldForm.Controls.Add(flowerControl);
-                }
-            }
-
-            //Remove dead flowers' pictureboxes.
-            foreach (Flower flower in flowersLookup.Keys)
-            {
-                if (!world.Flowers.Contains(flower))
-                {
-                    PictureBox flowerControlToRemove = flowersLookup[flower];
-                    fieldForm.Controls.Remove(flowerControlToRemove);
-                    flowerControlToRemove.Dispose();
-                    deadFlowers.Add(flower);
-                }
-            }
-        }
-
-        private void DrawBees()
-        {
-            BeeControl beeControl;
-
-            //Add new bees' pictures or move existing bees' picture locations, possibly between forms.
             foreach (Bee bee in world.Bees)
-            {
-                beeControl = GetBeeControl(bee);
                 if (bee.InsideHive)
-                {
-                    if (fieldForm.Controls.Contains(beeControl))
-                        MoveBeeFromFieldToHive(beeControl);
-                }
-                else if (hiveForm.Controls.Contains(beeControl))
-                    MoveBeeFromHiveToField(beeControl);
-                beeControl.Location = bee.Location;
-            }
-
-            //Remove retired bees' pictures.
-            foreach (Bee bee in beesLookup.Keys)
-            {
-                if (!world.Bees.Contains(bee))
-                {
-                    beeControl = beesLookup[bee];
-                    if (fieldForm.Controls.Contains(beeControl))
-                        fieldForm.Controls.Remove(beeControl);
-                    if (hiveForm.Controls.Contains(beeControl))
-                        hiveForm.Controls.Remove(beeControl);
-                    beeControl.Dispose();
-                    retiredBees.Add(bee);
-                }
-            }
+                    graphics.DrawImageUnscaled(beeAnimationLarge[cell], bee.Location);
         }
 
-        private void MoveBeeFromHiveToField(BeeControl beeControl)
+        public void PaintField(Graphics graphics)
         {
-            hiveForm.Controls.Remove(beeControl);
-            beeControl.Size = new Size(20, 20);
-            fieldForm.Controls.Add(beeControl);
-            beeControl.BringToFront();
-        }
+            graphics.FillRectangle(Brushes.SkyBlue, 0, 0, fieldForm.Width, fieldForm.Height / 2);
+            graphics.FillRectangle(Brushes.ForestGreen, 0, fieldForm.Height / 2, fieldForm.Width, fieldForm.Height / 2);
+            graphics.FillEllipse(Brushes.Gold, 10, 10, 50, 50);
 
-        private void MoveBeeFromFieldToHive(BeeControl beeControl)
-        {
-            fieldForm.Controls.Remove(beeControl);
-            beeControl.Size = new Size(40, 40);
-            hiveForm.Controls.Add(beeControl);
-            beeControl.BringToFront();
-        }
+            using (Pen p = new Pen(Color.SaddleBrown, 20))
+                graphics.DrawLine(p, fieldForm.ClientRectangle.Width, 0, fieldForm.Width - 100, 50);
+            graphics.DrawImageUnscaled(hiveOutside, fieldForm.Width - 100 - hiveOutside.Width / 2, 50);
 
-        private BeeControl GetBeeControl(Bee bee)
-        {
-            BeeControl beeControl;
+            foreach (Flower flower in world.Flowers)
+                graphics.DrawImageUnscaled(this.flower, flower.Location);
 
-            if (!beesLookup.ContainsKey(bee))
-            {
-                beeControl = new BeeControl() { Width = 40, Height = 40 };
-                beesLookup.Add(bee, beeControl);
-                hiveForm.Controls.Add(beeControl);
-                beeControl.BringToFront();
-            }
-            else
-                beeControl = beesLookup[bee];
-
-            return beeControl;
+            foreach (Bee bee in world.Bees)
+                if (!bee.InsideHive)
+                    graphics.DrawImageUnscaled(beeAnimationSmall[cell], bee.Location);
         }
     }
 }

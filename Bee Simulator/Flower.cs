@@ -4,7 +4,7 @@ using System.Drawing;
 namespace Bee_Simulator
 {
     [Serializable]
-    internal class Flower
+    public class Flower
     {
         private const int LifeSpanMin = 15000;
         private const int LifeSpanMax = 30000;
