@@ -103,6 +103,16 @@ namespace Bee_Simulator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Flower {
+            get {
+                object obj = ResourceManager.GetObject("Flower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Hive__inside_ {
             get {
                 object obj = ResourceManager.GetObject("Hive__inside_", resourceCulture);
