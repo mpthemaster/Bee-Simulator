@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,16 +14,36 @@ namespace Bee_Simulator
         private int framesRun = 0;
         private DateTime start = DateTime.Now;
         private DateTime end;
+        private HiveForm hiveForm = new HiveForm();
+        private FieldForm fieldForm = new FieldForm();
+        private Renderer renderer;
 
         public Form1()
         {
             InitializeComponent();
-            world = new World(new BeeMessage(SendMessage));
+
+            MoveChildForms();
+            hiveForm.Show(this);
+            fieldForm.Show(this);
+            ResetSimulater();
 
             timer1.Interval = 50;
             timer1.Tick += RunFrame;
             timer1.Enabled = false;
             UpdateStats(new TimeSpan());
+        }
+
+        private void ResetSimulater()
+        {
+            framesRun = 0;
+            world = new World(new BeeMessage(SendMessage));
+            renderer = new Renderer(world, hiveForm, fieldForm);
+        }
+
+        private void MoveChildForms()
+        {
+            hiveForm.Location = new Point(Location.X + Width + 10, Location.Y);
+            fieldForm.Location = new Point(Location.X, Location.Y + Math.Max(Height, hiveForm.Height) + 10);
         }
 
         private void SendMessage(int ID, string message)
@@ -80,6 +101,7 @@ namespace Bee_Simulator
         {
             framesRun++;
             world.Go(random);
+            renderer.Render();
             end = DateTime.Now;
             TimeSpan frameDuration = end - start;
             start = end;
@@ -104,8 +126,8 @@ namespace Bee_Simulator
 
         private void toolStripBtnReset_Click(object sender, EventArgs e)
         {
-            framesRun = 0;
-            world = new World(new BeeMessage(SendMessage));
+            renderer.Reset();
+            ResetSimulater();
 
             if (!timer1.Enabled)
                 toolStripBtnStartSimulation.Text = "Start Simulation";
@@ -145,6 +167,9 @@ namespace Bee_Simulator
 
             if (simRunning)
                 timer1.Start();
+
+            renderer.Reset();
+            renderer = new Renderer(world, hiveForm, fieldForm);
         }
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
@@ -173,6 +198,11 @@ namespace Bee_Simulator
 
             if (simRunning)
                 timer1.Start();
+        }
+
+        private void Form1_Move(object sender, EventArgs e)
+        {
+            MoveChildForms();
         }
     }
 }

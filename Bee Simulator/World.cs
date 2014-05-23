@@ -65,7 +65,7 @@ namespace Bee_Simulator
 
         private void AddFlower(Random random)
         {
-            Point location = new Point(random.Next(FieldMaxX, FieldMaxX), random.Next(FieldMinY, FieldMaxY));
+            Point location = new Point(random.Next(FieldMinX, FieldMaxX), random.Next(FieldMinY, FieldMaxY));
 
             Flowers.Add(new Flower(location, random));
         }

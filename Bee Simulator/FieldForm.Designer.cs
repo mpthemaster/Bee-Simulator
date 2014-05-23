@@ -36,7 +36,7 @@
             // 
             this.pictureBox1.BackgroundImage = global::Bee_Simulator.Properties.Resources.Hive__outside_;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(542, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(686, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(86, 85);
             this.pictureBox1.TabIndex = 0;
@@ -46,14 +46,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 261);
+            this.ClientSize = new System.Drawing.Size(784, 391);
             this.ControlBox = false;
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FieldForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "The Field";
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FieldForm_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

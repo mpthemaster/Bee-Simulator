@@ -43,7 +43,6 @@
             this.Name = "HiveForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "The Hive";
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HiveForm_MouseClick);
             this.ResumeLayout(false);
 
         }

@@ -16,10 +16,5 @@ namespace Bee_Simulator
         {
             InitializeComponent();
         }
-
-        private void FieldForm_MouseClick(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show(e.Location.ToString());
-        }
     }
 }

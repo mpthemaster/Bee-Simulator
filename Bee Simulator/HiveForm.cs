@@ -16,10 +16,5 @@ namespace Bee_Simulator
         {
             InitializeComponent();
         }
-
-        private void HiveForm_MouseClick(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show(e.Location.ToString());
-        }
     }
 }
