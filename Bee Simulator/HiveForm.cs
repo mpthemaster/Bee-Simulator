@@ -15,6 +15,8 @@ namespace Bee_Simulator
         public HiveForm()
         {
             InitializeComponent();
+
+            BackgroundImage = Renderer.ResizeImage(Properties.Resources.Hive__inside_, ClientRectangle.Width, ClientRectangle.Height);
         }
     }
 }

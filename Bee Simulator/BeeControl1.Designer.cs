@@ -55,15 +55,5 @@ namespace Bee_Simulator {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=17,Y=17}.
-        /// </summary>
-        internal static System.Drawing.Point animationTimer_TrayLocation {
-            get {
-                object obj = ResourceManager.GetObject("animationTimer.TrayLocation", resourceCulture);
-                return ((System.Drawing.Point)(obj));
-            }
-        }
     }
 }
