@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bee_Simulator
 {
@@ -42,6 +38,7 @@ namespace Bee_Simulator
         /// The amount of nectar the bee has collected from flowers.
         /// </summary>
         public double NectorCollected { get; private set; }
+
         private Point location;
 
         /// <summary>
